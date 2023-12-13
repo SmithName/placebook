@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook-like Wall</title>
+    <style>
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #wall {
+            width: 600px;
+            border: 1px solid #dddfe2;
+            background-color: #ffffff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        #post-form {
+            padding: 16px;
+            border-bottom: 1px solid #dddfe2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        textarea {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #dddfe2;
+            border-radius: 4px;
+            resize: none;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #1877f2;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        #posts {
+            padding: 16px;
+        }
+
+        .post {
+            border-bottom: 1px solid #dddfe2;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post p {
+            margin-bottom: 10px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .post img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="wall">
+    <div id="post-form">
+        <textarea id="post-text" placeholder="What's on your mind?"></textarea>
+        <input type="file" id="post-image" accept="image/*">
+        <button onclick="submitPost()">Post</button>
+    </div>
+
+    <div id="posts"></div>
+</div>
+
+<script>
+    function submitPost() {
+        const text = document.getElementById('post-text').value;
+        const imageInput = document.getElementById('post-image');
+        const image = imageInput.files[0];
+
+        if (text.trim() === '' && !image) {
+            alert('Please enter text or upload an image before posting.');
+            return;
+        }
+
+        const postsContainer = document.getElementById('posts');
+        const postElement = document.createElement('div');
+        postElement.classList.add('post');
+
+        if (text.trim() !== '') {
+            const textElement = document.createElement('p');
+            textElement.textContent = text;
+            postElement.appendChild(textElement);
+        }
+
+        if (image) {
+            const imageElement = document.createElement('img');
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                imageElement.src = e.target.result;
+            };
+            reader.readAsDataURL(image);
+
+            postElement.appendChild(imageElement);
+        }
+
+        postsContainer.insertBefore(postElement, postsContainer.firstChild);
+
+        // Clear input fields after posting
+        document.getElementById('post-text').value = '';
+        imageInput.value = '';
+    }
+</script>
+
+</body>
+</html>
