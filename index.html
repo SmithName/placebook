@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Facebook-like Wall</title>
+    <title> Wall</title>
     <style>
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -98,38 +98,31 @@
 </div>
 
 <script>
+   <script>
     function submitPost() {
         const text = document.getElementById('post-text').value;
         const imageInput = document.getElementById('post-image');
         const image = imageInput.files[0];
 
-        if (text.trim() === '' && !image) {
-            alert('Please enter text or upload an image before posting.');
-            return;
-        }
+        const formData = new FormData();
+        formData.append('text', text);
+        formData.append('image', image);
 
-        const postsContainer = document.getElementById('posts');
-        const postElement = document.createElement('div');
-        postElement.classList.add('post');
+        fetch('https://your-infinityfree-domain/api.php', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Handle the response if needed
+            console.log(data);
+            // You might want to fetch and display the latest posts here
+        })
+        .catch(error => console.error('Error:', error));
 
-        if (text.trim() !== '') {
-            const textElement = document.createElement('p');
-            textElement.textContent = text;
-            postElement.appendChild(textElement);
-        }
+        // Rest of your existing code
+    }
 
-        if (image) {
-            const imageElement = document.createElement('img');
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                imageElement.src = e.target.result;
-            };
-            reader.readAsDataURL(image);
-
-            postElement.appendChild(imageElement);
-        }
-
-        postsContainer.insertBefore(postElement, postsContainer.firstChild);
 
         // Clear input fields after posting
         document.getElementById('post-text').value = '';
