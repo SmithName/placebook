@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Wall</title>
+    <title>Wall</title>
     <style>
         body {
             font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -98,7 +98,6 @@
 </div>
 
 <script>
-   <script>
     function submitPost() {
         const text = document.getElementById('post-text').value;
         const imageInput = document.getElementById('post-image');
@@ -119,10 +118,6 @@
             // You might want to fetch and display the latest posts here
         })
         .catch(error => console.error('Error:', error));
-
-        // Rest of your existing code
-    }
-
 
         // Clear input fields after posting
         document.getElementById('post-text').value = '';
