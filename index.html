@@ -107,10 +107,10 @@
         formData.append('text', text);
         formData.append('image', image);
 
-        fetch('sql206.infinityfree.com', {
-            method: 'POST',
-            body: formData,
-        })
+       fetch('https://baza-podataka.rf.gd/index.php', {
+    method: 'POST',
+    body: formData,
+})
         .then(response => response.json())
         .then(data => {
             // Handle the response if needed
